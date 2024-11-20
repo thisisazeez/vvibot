@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff5eb;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #ff6b00;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ffd1b3;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #ff6b00;
+        }
+
+        button {
+            width: 100%;
+            padding: 1rem;
+            background-color: #ff6b00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff8533;
+        }
+
+        .success-message {
+            display: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" required>
+                <div class="error-message" id="fullNameError">Please enter your full name</div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+                <div class="error-message" id="emailError">Please enter a valid email</div>
+            </div>
+
+            <div class="form-group">
+                <label for="licenseCode">License Code</label>
+                <input type="text" id="licenseCode" required>
+                <div class="error-message" id="licenseError">Invalid license code. Please try again.</div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmLicenseCode">Confirm License Code</label>
+                <input type="text" id="confirmLicenseCode" required>
+                <div class="error-message" id="confirmLicenseError">License codes do not match</div>
+            </div>
+
+            <button type="submit">Login</button>
+        </form>
+        <div class="success-message" id="successMessage">
+            Login successful! You are in.
+        </div>
+    </div>
+
+    <script>
+        const VALID_LICENSE_CODE = 'CGNCDUWT';
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Reset error messages
+            document.querySelectorAll('.error-message').forEach(error => {
+                error.style.display = 'none';
+            });
+
+            // Get form values
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const licenseCode = document.getElementById('licenseCode').value;
+            const confirmLicenseCode = document.getElementById('confirmLicenseCode').value;
+
+            // Validate inputs
+            let hasError = false;
+
+            if (!fullName) {
+                document.getElementById('fullNameError').style.display = 'block';
+                hasError = true;
+            }
+
+            if (!email || !email.includes('@')) {
+                document.getElementById('emailError').style.display = 'block';
+                hasError = true;
+            }
+
+            // Check if license code is valid
+            if (licenseCode !== VALID_LICENSE_CODE) {
+                document.getElementById('licenseError').style.display = 'block';
+                document.getElementById('licenseCode').classList.add('shake');
+                setTimeout(() => {
+                    document.getElementById('licenseCode').classList.remove('shake');
+                }, 500);
+                hasError = true;
+            }
+
+            // Check if license codes match
+            if (licenseCode !== confirmLicenseCode) {
+                document.getElementById('confirmLicenseError').style.display = 'block';
+                hasError = true;
+            }
+
+            if (!hasError) {
+                // Hide form and show success message
+                document.getElementById('loginForm').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Local file redirect after 2 seconds
+                setTimeout(() => {
+                    location.href = 'welcome.html';  // Just using location.href for local file
+                }, 2000);
+            }
+        }
+    </script>
+</body>
+</html>

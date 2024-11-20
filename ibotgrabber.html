@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>skipthedishes</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      flex-shrink: 0;
+    }
+
+    .logo img {
+      width: 100px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .contact-info {
+      text-align: right;
+      font-size: 16px;
+    }
+
+    .main-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: 90%;
+      font-size: 24px;
+      padding: 20px;
+    }
+
+    /* Mobile Responsive Styles */
+    @media screen and (max-width: 600px) {
+      .header {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .contact-info {
+        text-align: center;
+      }
+
+      .main-content {
+        font-size: 20px;
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none;
+        margin-top: 40px;
+      }
+    }
+
+    /* Small screens */
+    @media screen and (max-width: 320px) {
+      .main-content {
+        font-size: 18px;
+      }
+    }
+
+    /* Very large screens */
+    @media screen and (min-width: 1200px) {
+      body {
+        padding: 40px;
+      }
+      
+      .main-content {
+        font-size: 28px;
+      }
+    }
+    .tip{
+      color: green;
+    }
+    .tip2{
+      color: red;
+    }
+    .tip3{
+      color: rgb(209, 209, 0);
+    }
+    .btn-green {
+  background-color: #34C759; 
+  color: #FFFFFF; 
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.btn-green:hover {
+  background-color: #2EC27A; 
+}
+
+
+    
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <img src="https://cdn.prod.website-files.com/64bc25206b4ad5fcc261b3aa/64cf08bba5eab42662604262_hgX_aosf-AtLFAIPFjeeuIcEkEXwMniie6_oDMSLi2s.png" alt="Company Logo">
+    </div>
+    <div class="contact-info">
+        <div>rangeboy@hotmail.com</div>
+        <div>Range Boy</div>
+    </div>
+  </div>
+  <div class="main-content">
+    <span class="tip">Congratulations!</span> Your Bot has been successfully been activated click on the Button below to access the account and once you have your access  make sure you login with the license key provided by the Agent<br> 
+        <br>
+    <a href="agreement.html" class="btn-green">Click Here</a>
+
+     <br>
+  </div>
+</body>
+</html>

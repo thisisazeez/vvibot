@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welland Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            padding: 20px;
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-info {
+            text-align: right;
+        }
+
+        .wallet-section {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .wallet {
+            background: linear-gradient(135deg, #ff6b00, #ff8533);
+            color: white;
+            padding: 20px;
+        }
+
+        .wallet-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+
+        .wallet-amount {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .wallet-buttons {
+            display: flex;
+            gap: 10px;
+            padding: 15px;
+            background: rgb(255, 115, 0);
+        }
+
+        .wallet-button {
+            flex: 1;
+            padding: 10px;
+            background: #da8312;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .wallet-button:hover {
+            background: #e5e5e5;
+        }
+
+        .transactions {
+            padding: 15px;
+        }
+
+        .transaction {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .transaction:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .transaction-date {
+            color: #666;
+            font-size: 0.8em;
+        }
+
+        .transaction-amount {
+            font-weight: bold;
+        }
+
+        .transaction-amount.credit {
+            color: #2ecc71;
+        }
+
+        .transaction-amount.debit {
+            color: #e74c3c;
+        }
+
+        .map-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .location-info {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 5px;
+            border-left: 4px solid #ff6b00;
+        }
+
+        .search-box {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            flex: 1;
+        }
+
+        button {
+            background: #ff6b00;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #ff8533;
+        }
+
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Dashboard</h1>
+            <div class="profile">
+                <div class="profile-info">
+                    <div>Range Boy</div>
+                    <div style="color: #666; font-size: 0.8em">rangeboy@hotmail.com</div>
+                </div>
+                <div class="profile-pic">RB</div>
+            </div>
+        </div>
+
+        <div class="wallet-section">
+            <div class="wallet">
+                <div class="wallet-label">Available Balance</div>
+                <div class="wallet-amount">$6,604.00</div>
+            </div>
+            <div class="wallet-buttons">
+                <button class="wallet-button">Withdraw Funds</button>
+                <button class="wallet-button">Transfer</button>
+                <button class="wallet-button">Deposit</button>
+            </div>
+            <div class="transactions">
+                <h3 style="margin-bottom: 10px">Transaction History</h3>
+                <div class="transaction">
+                    <div class="transaction-info">
+                        <div>Initial Deposit</div>
+                        <div class="transaction-date">Nov 11, 2024</div>
+                    </div>
+                    <div class="transaction-amount credit">+$6,789.00</div>
+                </div>
+                <div class="transaction">
+                    <div class="transaction-info">
+                        <div>Bonus Deposit</div>
+                        <div class="transaction-date">Nov 13, 2024</div>
+                    </div>
+                    <div class="transaction-amount credit">+$110.00</div>
+                </div>
+                <div class="transaction">
+                    <div class="transaction-info">
+                        <div>License Purchase</div>
+                        <div class="transaction-date">Nov 15, 2024</div>
+                    </div>
+                    <div class="transaction-amount debit">-$185.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-container">
+            <div class="location-info">
+                <strong>Current Location:</strong> 3rd Street, Welland, ON L3B 4W6, Canada
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="Search by name or postal code..." value="L3B 4W6">
+                <button onclick="searchLocation()">Search</button>
+            </div>
+            <div id="map"></div>
+            <a href="rides.html" style="text-decoration: none; display: block; width: 100%;">
+    <button style="margin-top: 20px; width: 100%">Start Your Bot</button>
+</a>
+</div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+    <script>
+        // Coordinates for 3rd Street, Welland, Ontario (L3B 4W6)
+        const THIRD_STREET_COORDS = [43.0245, -79.2482];
+        
+        // Initialize map centered on 3rd Street
+        const map = L.map('map').setView(THIRD_STREET_COORDS, 16);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Add marker for 3rd Street
+        L.marker(THIRD_STREET_COORDS).addTo(map)
+            .bindPopup('3rd Street, Welland, ON L3B 4W6')
+            .openPopup();
+
+        function searchLocation() {
+            // For demo purposes, always return to 3rd Street
+            map.setView(THIRD_STREET_COORDS, 16);
+        }
+    </script>
+</body>
+</html>

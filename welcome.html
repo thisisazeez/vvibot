@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Ibot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #e67e22; /* Orange color for 'Welcome to Ibot' */
+        }
+
+        p {
+            line-height: 1.6;
+            margin: 15px 0;
+        }
+
+        .highlight-orange {
+            color: #e67e22; /* Orange color for 'SkipTheDishes' */
+        }
+
+        .note {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+
+        .bitcoin-address {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bitcoin-address span {
+            font-family: monospace;
+        }
+
+        .copy-button {
+            padding: 5px 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .copy-button:hover {
+            background-color: #2980b9;
+        }
+
+        .proceed-button {
+            display: block;
+            margin: 30px auto;
+            padding: 10px 20px;
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            width: fit-content;
+        }
+
+        .proceed-button:hover {
+            background-color: #d35400;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Ibot</h1>
+        <p>
+            Welcome to Ibot for <span class="highlight-orange">SkipTheDishes</span>. You can use your bot to your satisfaction, but you'll need to pay combined taxes to avoid bot malfunctions and non-responsiveness.
+        </p>
+        <p class="note">
+            Note: This payment is just $223. If you wish not to pay, that's fine, but without the tax fee, the bot might not function properly or, in some cases, at all.
+        </p>
+        <p>Please pay below with Bitcoin. The address is provided and can be copied to your clipboard:</p>
+
+        <p>After payment made please send the receipt to your agent Thank You!</p>
+        
+        <div class="bitcoin-address">
+            <span id="bitcoinAddress">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</span>
+            <button class="copy-button" onclick="copyBitcoinAddress()">Copy</button>
+        </div>
+
+        <!-- Proceed Button -->
+        <a href="dashboard.html" class="proceed-button">Proceed</a>
+    </div>
+
+    <script>
+        function copyBitcoinAddress() {
+            const bitcoinAddress = document.getElementById("bitcoinAddress").innerText;
+
+            navigator.clipboard.writeText(bitcoinAddress).then(
+                () => alert("Bitcoin address copied to clipboard!"),
+                () => alert("Failed to copy Bitcoin address.")
+            );
+        }
+    </script>
+</body>
+</html>

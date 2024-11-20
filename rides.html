@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welland Ride Requests</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .header {
+            background-color: #ff6b00;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .status-indicator {
+            background-color: #4CAF50;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .rides-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .ride-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .ride-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .ride-type {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .passenger {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .delivery {
+            background-color: #fbe9e7;
+            color: #d84315;
+        }
+
+        .location-details {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .location-details p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2e7d32;
+            margin: 10px 0;
+        }
+
+        .accept-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #ff6b00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .accept-btn:hover {
+            background-color: #ff8533;
+        }
+
+        .customer-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .customer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .ride-details {
+            margin: 10px 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .timer {
+            font-size: 12px;
+            color: #f44336;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .rides-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Welland Ride Requests</h1>
+        <div class="status-indicator">Online - Accepting Requests</div>
+    </div>
+
+    <div class="rides-container">
+        <!-- Ride Request 1 -->
+        <div class="ride-card">
+            <span class="ride-type passenger">Passenger Ride</span>
+            <div class="customer-info">
+                <div class="customer-avatar">JD</div>
+                <div>
+                    <h3>John Doe</h3>
+                    <p>Rating: ⭐ 4.8</p>
+                </div>
+            </div>
+            <div class="location-details">
+                <p><strong>Pickup:</strong> 75 King St, Welland, ON</p>
+                <p><strong>Dropoff:</strong> Seaway Mall, 800 Niagara St</p>
+                <p><strong>Distance:</strong> 3.5 km</p>
+            </div>
+            <p class="price">$15.50</p>
+            <div class="ride-details">
+                <p>🕒 Pickup in: 5 mins</p>
+                <p>👥 Passengers: 2</p>
+            </div>
+            <button class="accept-btn">Accept Ride</button>
+            <p class="timer">Request expires in 30 seconds</p>
+        </div>
+
+        <!-- Ride Request 2 -->
+        <div class="ride-card">
+            <span class="ride-type delivery">Delivery</span>
+            <div class="customer-info">
+                <div class="customer-avatar">MS</div>
+                <div>
+                    <h3>Mary Smith</h3>
+                    <p>Rating: ⭐ 4.9</p>
+                </div>
+            </div>
+            <div class="location-details">
+                <p><strong>Pickup:</strong> Canadian Tire, Welland</p>
+                <p><strong>Dropoff:</strong> 245 First Ave, Welland</p>
+                <p><strong>Distance:</strong> 2.8 km</p>
+            </div>
+            <p class="price">$12.75</p>
+            <div class="ride-details">
+                <p>📦 Package: Small Box</p>
+                <p>⚖️ Weight: ~2 kg</p>
+            </div>
+            <button class="accept-btn">Accept Delivery</button>
+            <p class="timer">Request expires in 45 seconds</p>
+        </div>
+
+        <!-- Ride Request 3 -->
+        <div class="ride-card">
+            <span class="ride-type passenger">Passenger Ride</span>
+            <div class="customer-info">
+                <div class="customer-avatar">RK</div>
+                <div>
+                    <h3>Robert King</h3>
+                    <p>Rating: ⭐ 4.7</p>
+                </div>
+            </div>
+            <div class="location-details">
+                <p><strong>Pickup:</strong> Niagara College, Welland</p>
+                <p><strong>Dropoff:</strong> Welland Bus Terminal</p>
+                <p><strong>Distance:</strong> 4.2 km</p>
+            </div>
+            <p class="price">$18.25</p>
+            <div class="ride-details">
+                <p>🕒 Pickup in: 10 mins</p>
+                <p>👥 Passengers: 1</p>
+            </div>
+            <button class="accept-btn">Accept Ride</button>
+            <p class="timer">Request expires in 25 seconds</p>
+        </div>
+    </div>
+
+    <script>
+        // Add click handlers for accept buttons
+        document.querySelectorAll('.accept-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.ride-card');
+                this.textContent = 'Accepted!';
+                this.style.backgroundColor = '#4CAF50';
+                this.disabled = true;
+                
+                // Remove the card after 2 seconds
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.8)';
+                    card.style.transition = 'all 0.5s ease';
+                    setTimeout(() => card.remove(), 500);
+                }, 2000);
+            });
+        });
+
+        // Simulate countdown timers
+        document.querySelectorAll('.timer').forEach(timer => {
+            let seconds = parseInt(timer.textContent.match(/\d+/)[0]);
+            const interval = setInterval(() => {
+                seconds--;
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    const card = timer.closest('.ride-card');
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.8)';
+                    card.style.transition = 'all 0.5s ease';
+                    setTimeout(() => card.remove(), 500);
+                } else {
+                    timer.textContent = `Request expires in ${seconds} seconds`;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
